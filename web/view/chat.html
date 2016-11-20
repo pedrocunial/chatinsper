@@ -12,8 +12,10 @@
             <ul>
                 <li ng-repeat="m in message">{{m}}</li>
             </ul>
-            <input type="text" placeholder="Converse com seus amigos!" ng-model="msg">
-            <input type="submit" class="btn btn-danger" ng-click="send()">
+            <form>
+                <input type="text" placeholder="Converse com seus amigos!" ng-model="msg">
+                <input type="submit" class="btn btn-danger" ng-click="send()">
+            </form>
             <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
         </div>
         <script src="../controller/chat.js"></script>
