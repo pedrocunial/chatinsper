@@ -7,21 +7,21 @@ app.controller("ChatController", ["$scope", function() {
     var host = "wss://".concat(location.host); // angular for getting url + port
     var connection = new WebSocket(host.concat("/chat"));
 
-    connection.onclose = function(e) {
+    connection.onclose = function(event) {
         scope.$apply(function() {
             scope.message.push("DESCONECTADO");
         })
     }
 
-    connection.onopen = function(e) {
+    connection.onopen = function(event) {
         scope.$apply(function() {
             scope.message.push("CONECTADO");
         })
     }
 
-    connection.onmessage = function(e) {
+    connection.onmessage = function(event) {
         scope.$apply(function() {
-            scope.message.push(e.data);
+            scope.message.push(event.data);
         })
     }
 
