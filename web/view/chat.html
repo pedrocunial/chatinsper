@@ -1,0 +1,19 @@
+<html ng-app="chat">
+    <head>
+        <title>ChatINSPER</title>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    </head>
+    <body ng-controller="ChatController">
+        <div class="jumbotron">
+            <h1>ChatINSPER</h1>
+        </div>
+        <div id="scope-wrap">
+            {{message}}
+            <input type="text" placeholder="Converse com seus amigos!" ng-model="msg">
+            <button class="btn btn-danger" ng-click="send()">Enviar</button>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+        </div>
+        <script src="../controller/chat.js"></script>
+    </body>
+</html>
