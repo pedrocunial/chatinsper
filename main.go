@@ -6,11 +6,18 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
 	// Server flags
-	port := flag.Int("port", 8888, "server port")
+	// port := flag.Int("port", 8888, "server port")
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
 	dir := flag.String("directory", "web/", "website views")
 	flag.Parse()
 
@@ -22,9 +29,10 @@ func main() {
 	http.Handle("/", fileHandler)
 	http.HandleFunc("/chat", model.ChatHandler)
 
-	log.Printf("Running on port %d", *port)
+	fmt.Printf("On port %s", port)
 
-	addr := fmt.Sprintf("localhost:%d", *port)
+	addr := ":" + port
 	err := http.ListenAndServe(addr, nil)
+	fmt.Println("Listening to: %s", addr)
 	fmt.Println(err.Error())
 }
