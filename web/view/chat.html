@@ -9,7 +9,9 @@
             <h1>ChatINSPER</h1>
         </div>
         <div id="scope-wrap">
-            {{message}}
+            <ul>
+                <li ng-repeat="m in message">{{m}}</li>
+            </ul>
             <input type="text" placeholder="Converse com seus amigos!" ng-model="msg">
             <button class="btn btn-danger" ng-click="send()">Enviar</button>
             <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>

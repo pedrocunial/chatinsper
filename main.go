@@ -14,6 +14,8 @@ func main() {
 	dir := flag.String("directory", "web/", "website views")
 	flag.Parse()
 
+	model.Init()
+
 	// Handler for requests
 	fileServer := http.Dir(*dir)
 	fileHandler := http.FileServer(fileServer)
