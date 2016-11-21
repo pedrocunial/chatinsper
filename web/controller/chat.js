@@ -1,4 +1,4 @@
-var app = angular.module("chat", []);
+var app = angular.module("ws", []);
 
 app.controller("ChatController", ["$scope", function() {
     // we need to get the scope from the html this'll be applied to
@@ -16,7 +16,7 @@ app.controller("ChatController", ["$scope", function() {
     }
 
     var addr = ws.concat(host); // angular for getting url + port
-    var connection = new WebSocket(addr.concat("/ws"));
+    var connection = new WebSocket(addr.concat("/chat"));
 
     connection.onclose = function(event) {
         scope.$apply(function() {
