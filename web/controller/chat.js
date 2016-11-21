@@ -4,8 +4,19 @@ app.controller("ChatController", ["$scope", function() {
     // we need to get the scope from the html this'll be applied to
     var scope = angular.element(document.getElementById("scope-wrap")).scope();
     scope.message = []; // list of messages
-    var host = "wss://".concat(location.host); // angular for getting url + port
-    var connection = new WebSocket(host.concat("/chat"));
+
+    var host = location.host;
+    // check if we're on a secure connection, if so
+    // we'll use a secure websocket, if not, we'll
+    // use a regular one
+    if(host.includes("https")) {
+        var ws = "wss://";
+    } else {
+        var ws = "ws://";
+    }
+
+    var addr = ws.concat(host); // angular for getting url + port
+    var connection = new WebSocket(addr.concat("/web"));
 
     connection.onclose = function(event) {
         scope.$apply(function() {
