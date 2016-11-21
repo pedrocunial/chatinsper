@@ -1,4 +1,4 @@
-var app = angular.module("ws", []);
+var app = angular.module("chat", []);
 
 app.controller("ChatController", ["$scope", function() {
     // we need to get the scope from the html this'll be applied to
