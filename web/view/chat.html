@@ -5,18 +5,23 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     </head>
     <body ng-controller="ChatController">
-        <div class="jumbotron">
-            <h1>ChatINSPER</h1>
-        </div>
-        <div id="scope-wrap">
-            <ul>
-                <li ng-repeat="m in message">{{m}}</li>
-            </ul>
-            <form>
-                <input type="text" placeholder="Converse com seus amigos!" ng-model="msg">
-                <input type="submit" class="btn btn-danger" ng-click="send()">
-            </form>
-            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <h1>ChatINSPER</h1>
+            </div>
+            <div id="scope-wrap">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-danger" ng-repeat="m in message">{{m}}</li>
+                </ul>
+                <form style="width:100%">
+                    <div style="width:100%">
+                        <input type="text" placeholder="Converse com seus amigos!" ng-model="msg">
+                        <input type="submit" class="btn btn-danger" ng-click="send()">
+                    </div>
+                </form>
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+            </div>
         </div>
         <script src="../controller/chat.js"></script>
     </body>
