@@ -9,7 +9,7 @@ app.controller("ChatController", ["$scope", function() {
     // check if we're on a secure connection, if so
     // we'll use a secure websocket, if not, we'll
     // use a regular one
-    if(host.includes("https")) {
+    if(location.protocol === "https:") {
         var ws = "wss://";
     } else {
         var ws = "ws://";
@@ -38,6 +38,6 @@ app.controller("ChatController", ["$scope", function() {
 
     scope.send = function() {
         connection.send(scope.msg);
-        scope.msg = '';
+        scope.msg = "";
     }
 }])
