@@ -20,13 +20,15 @@ app.controller("ChatController", ["$scope", function() {
 
     connection.onclose = function(event) {
         scope.$apply(function() {
-            scope.message.push("DESCONECTADO");
+            scope.message.push("SYSTEM")
+            scope.message.push("DESCONECTADO")
         })
     }
 
     connection.onopen = function(event) {
         scope.$apply(function() {
-            scope.message.push("CONECTADO");
+            scope.message.push("SYSTEM")
+            scope.message.push("CONECTADO")
         })
     }
 
@@ -37,7 +39,11 @@ app.controller("ChatController", ["$scope", function() {
     }
 
     scope.send = function() {
-        connection.send(scope.msg);
+        connection.send([
+            scope.name,
+            scope.msg
+        ]);
+        // scope.name = "";
         scope.msg = "";
     }
 }])

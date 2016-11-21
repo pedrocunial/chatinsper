@@ -4,6 +4,7 @@ import (
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
+	"strings"
 )
 
 var connections map[*websocket.Conn]bool
@@ -13,11 +14,12 @@ func Init() {
 	connections = make(map[*websocket.Conn]bool)
 }
 
-func sendAll(msg []byte) {
+func sendAll(msg [][]byte) {
 	// for dealing with different connections at the same time
 	for connection := range connections {
-		err := connection.WriteMessage(websocket.TextMessage, msg)
-		if err != nil {
+		err1 := connection.WriteMessage(websocket.TextMessage, msg[0])
+		err2 := connection.WriteMessage(websocket.TextMessage, msg[1])
+		if err1 != nil || err2 != nil {
 			delete(connections, connection)
 			return
 		}
@@ -43,6 +45,14 @@ func ChatHandler(w http.ResponseWriter, r *http.Request) {
 			return // break the inf loop
 		}
 		log.Println(string(msg))
-		sendAll(msg)
+		sendAll(parseMsg(msg))
 	}
+}
+
+func parseMsg(msg []byte) [][]byte {
+	function := func(c rune) bool {
+		return c == ','
+	}
+	fields := strings.FieldsFunc(string(msg), function)
+	return [][]byte{[]byte(fields[0]), []byte(fields[1])}
 }
