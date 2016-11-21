@@ -28,7 +28,7 @@ func main() {
 	fileServer := http.Dir(*dir)
 	fileHandler := http.FileServer(fileServer)
 	http.Handle("/", fileHandler)
-	http.HandleFunc("/ws", model.ChatHandler)
+	http.HandleFunc("/chat", model.ChatHandler)
 
 	fmt.Printf("On port %s\n", port)
 
