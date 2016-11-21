@@ -16,7 +16,7 @@ app.controller("ChatController", ["$scope", function() {
     }
 
     var addr = ws.concat(host); // angular for getting url + port
-    var connection = new WebSocket(addr.concat("/web"));
+    var connection = new WebSocket(addr.concat("/ws"));
 
     connection.onclose = function(event) {
         scope.$apply(function() {

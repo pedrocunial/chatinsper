@@ -4,6 +4,7 @@ import (
 	"chatinsper/web/model"
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 )
@@ -14,7 +15,7 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		fmt.Println("$PORT not found, using 8888")
+		log.Println("$PORT not found, using 8888")
 		port = "8888"
 	}
 
@@ -27,7 +28,7 @@ func main() {
 	fileServer := http.Dir(*dir)
 	fileHandler := http.FileServer(fileServer)
 	http.Handle("/", fileHandler)
-	http.HandleFunc("/web", model.ChatHandler)
+	http.HandleFunc("/ws", model.ChatHandler)
 
 	fmt.Printf("On port %s\n", port)
 
