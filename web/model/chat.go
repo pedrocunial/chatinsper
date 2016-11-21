@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+const N uint8 = 2 // number of data per message
+
 var connections map[*websocket.Conn]bool
 
 func Init() {
@@ -14,14 +16,17 @@ func Init() {
 	connections = make(map[*websocket.Conn]bool)
 }
 
-func sendAll(msg [][]byte) {
+func sendAll(msg [N][]byte) {
 	// for dealing with different connections at the same time
+	var i uint8
 	for connection := range connections {
-		err1 := connection.WriteMessage(websocket.TextMessage, msg[0])
-		err2 := connection.WriteMessage(websocket.TextMessage, msg[1])
-		if err1 != nil || err2 != nil {
-			delete(connections, connection)
-			return
+		for i = 0; i < N; i++ {
+			err := connection.WriteMessage(
+				websocket.TextMessage, msg[i])
+			if err != nil {
+				delete(connections, connection)
+				return
+			}
 		}
 	}
 }
@@ -49,10 +54,15 @@ func ChatHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func parseMsg(msg []byte) [][]byte {
+func parseMsg(msg []byte) [N][]byte {
+	var i uint8
 	function := func(c rune) bool {
 		return c == ','
 	}
 	fields := strings.FieldsFunc(string(msg), function)
-	return [][]byte{[]byte(fields[0]), []byte(fields[1])}
+	var result [N][]byte
+	for i = 0; i < N; i++ {
+		result[i] = []byte(fields[i])
+	}
+	return result
 }
