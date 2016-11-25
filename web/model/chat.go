@@ -1,7 +1,6 @@
 package model
 
 import (
-	"flag"
 	"github.com/gorilla/websocket"
 	"html/template"
 	"io/ioutil"
@@ -21,30 +20,9 @@ type Page struct {
 	Body  []byte
 }
 
-func Init() *http.ServeMux {
+func Init() {
 	// init connections map variable (analog to a constructor to our pkg)
 	connections = make(map[*websocket.Conn]bool)
-
-	// define routers mappings
-	views := flag.String("web directory", "web/view/", "website")
-	css := flag.String("css directory", "web/css/", "css")
-	controller := flag.String("controller directory", "web/controller",
-		"controller")
-	flag.Parse()
-
-	r := http.NewServeMux()
-
-	fileServer := http.Dir(*views)
-	fileHandler := http.FileServer(fileServer)
-	cssHandler := http.FileServer(http.Dir(*css))
-	controllerHandler := http.FileServer(http.Dir(*controller))
-	r.HandleFunc("/chat", WsHandler)
-	r.Handle("/", fileHandler)
-	r.Handle("/css/", http.StripPrefix("/css/", cssHandler))
-	r.Handle("/controller/",
-		http.StripPrefix("/controller/", controllerHandler))
-
-	return r
 }
 
 func sendAll(msg [N][]byte) {

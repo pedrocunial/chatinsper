@@ -1,7 +1,7 @@
 package main
 
 import (
-	"chatinsper/web/model"
+	"chatinsper/web/controller"
 	"fmt"
 	"github.com/gorilla/handlers"
 	"log"
@@ -18,7 +18,7 @@ func main() {
 		port = "8888"
 	}
 
-	r := model.Init()
+	r := controller.Init()
 
 	fmt.Printf("On port %s\n", port)
 
