@@ -22,6 +22,7 @@ func Init() *http.ServeMux {
 	cssHandler := http.FileServer(http.Dir(*css))
 	controllerHandler := http.FileServer(http.Dir(*controller))
 	r.HandleFunc("/chat", model.WsHandler)
+	r.Handle("/room", fileHandler)
 	r.Handle("/", fileHandler)
 	r.Handle("/css/", http.StripPrefix("/css/", cssHandler))
 	r.Handle("/controller/",

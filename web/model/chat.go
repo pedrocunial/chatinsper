@@ -40,28 +40,26 @@ func sendAll(msg [N][]byte) {
 	}
 }
 
-func loadPage(filepath string) (*Page, error) {
+func loadPage(filepath string, title string) (*Page, error) {
 	body, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		return nil, err
 	}
-	return &Page{Title: filepath, Body: body}, nil
+	return &Page{Title: title, Body: body}, nil
 }
 
 func TemplateHandler(w http.ResponseWriter, r *http.Request) {
-	p, err := loadPage("web/view/chat.html")
+	title := r.URL.Path[len("/room/"):]
+	p, err := loadPage("/room.html", title)
 	if err != nil {
 		p = &Page{Title: "ChatINSPER"}
 	}
-	t := template.New(string(p.Body)).Delims("<<", ">>")
-	err = t.Execute(w, p)
+	t, err := template.New("room.html").
+		Delims("<<", ">>").ParseFiles("room.html")
 	if err != nil {
-		log.Println("Executing template:", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-}
-
-func ChatHandler(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/web/view/chat.html", http.StatusFound)
+	t.Execute(w, p)
 }
 
 func WsHandler(w http.ResponseWriter, r *http.Request) {
