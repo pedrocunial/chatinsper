@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Init() *http.ServeMux {
+func Init() (*http.ServeMux, *http.ServeMux) {
 	model.Init()
 	// define routers mappings
 	views := flag.String("web directory", "web/view/", "website")
@@ -21,12 +21,15 @@ func Init() *http.ServeMux {
 	fileHandler := http.FileServer(fileServer)
 	cssHandler := http.FileServer(http.Dir(*css))
 	controllerHandler := http.FileServer(http.Dir(*controller))
-	r.HandleFunc("/chat", model.WsHandler)
+	// r.HandleFunc("/chat", model.WsHandler)
 	r.Handle("/room", fileHandler)
 	r.Handle("/", fileHandler)
 	r.Handle("/css/", http.StripPrefix("/css/", cssHandler))
 	r.Handle("/controller/",
 		http.StripPrefix("/controller/", controllerHandler))
 
-	return r
+	r2 := http.NewServeMux()
+	r2.HandleFunc("/chat", model.WsHandler)
+
+	return r, r2
 }

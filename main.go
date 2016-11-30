@@ -9,21 +9,25 @@ import (
 	"os"
 )
 
+func openconnection(port string, r *http.ServeMux) {
+	fmt.Println(port)
+	addr := ":" + port
+	err := http.ListenAndServe(addr, handlers.CompressHandler(r))
+	fmt.Println("Listening to: %s", addr)
+	fmt.Println(err.Error())
+}
+
 func main() {
 	// Server flags
-	// port := flag.Int("port", 8888, "server port")
+	r1, r2 := controller.Init()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Println("$PORT not found, using 8888")
 		port = "8888"
 	}
-
-	r := controller.Init()
-
 	fmt.Printf("On port %s\n", port)
-
-	addr := ":" + port
-	err := http.ListenAndServe(addr, handlers.CompressHandler(r))
-	fmt.Println("Listening to: %s", addr)
-	fmt.Println(err.Error())
+	// threads
+	go openconnection(port, r1)
+	go openconnection("5050", r2)
 }

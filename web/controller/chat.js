@@ -1,23 +1,11 @@
 var app = angular.module("chat", []);
-var rooom = angulaar.module("chat-room", ['ngRoute']).config(
-    function($routeProvider, $locationProvider) {
-        // configure the routing rules here
-        $routeProvider.when('/room/:room', {
-            controller: 'PagesCtrl'
-        });
-        // enable HTML5mode to disable hashbang urls
-        $locationProvider.html5Mode(true);
-    }).controller('PagesCtrl', function ($routeParams) {
-        console.log($room);
-    });
 
-
-genericcontroller = function(isRoom) {
+app.controller("ChatController", ["$scope", function() {
     // we need to get the scope from the html this'll be applied to
     var scope = angular.element(document.getElementById("scope-wrap")).scope();
     scope.message = []; // list of messages
 
-    var host = location.host;
+    var host = location.hostname; // returns the hostname without portnumber
     // check if we're on a secure connection, if so
     // we'll use a secure websocket, if not, we'll
     // use a regular one
@@ -27,12 +15,8 @@ genericcontroller = function(isRoom) {
         var ws = "ws://";
     }
 
-    var addr = ws.concat(host); // angular for getting url + port
-    if (isRoom) {
-        var connection = new WebSocket(addr.concat("/room/:param1"))
-    } else {
-        var connection = new WebSocket(addr.concat("/chat"));
-    }
+    var addr = ws.concat(host.concat(":5050")); // angular for getting url + port
+    var connection = new WebSocket(addr.concat("/chat"));
 
     connection.onclose = function(event) {
         scope.$apply(function() {
@@ -62,6 +46,4 @@ genericcontroller = function(isRoom) {
         // scope.name = "";
         scope.msg = "";
     }
-}
-
-app.controller("ChatController", ["$scope", ])
+}])
