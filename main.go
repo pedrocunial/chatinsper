@@ -22,6 +22,7 @@ func main() {
 		log.Println("$PORT not found, using 8888")
 		port = "8888"
 	}
+	port = "443"
 
 	r := controller.Init()
 
