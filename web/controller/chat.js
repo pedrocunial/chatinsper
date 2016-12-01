@@ -9,7 +9,7 @@ app.controller("ChatController", ["$scope", function() {
     // check if we're on a secure connection, if so
     // we'll use a secure websocket, if not, we'll
     // use a regular one
-    if(location.protocol === "https:") {
+    if (host.includes("heroku")) {
         var ws = "wss://";
     } else {
         var ws = "ws://";
