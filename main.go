@@ -9,6 +9,11 @@ import (
 	"os"
 )
 
+func redirect(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "https://chatinsper.herokuapp.com"+
+		r.RequestURI, http.StatusMovedPermanently)
+}
+
 func main() {
 	// Server flags
 	// port := flag.Int("port", 8888, "server port")
