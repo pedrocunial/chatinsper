@@ -9,11 +9,11 @@ app.controller("ChatController", ["$scope", function() {
     // check if we're on a secure connection, if so
     // we'll use a secure websocket, if not, we'll
     // use a regular one
-    if(location.protocol === "https:") {
+    // if(location.protocol === "https:") {
         var ws = "wss://";
-    } else {
-        var ws = "ws://";
-    }
+    // } else {
+    //     var ws = "ws://";
+    // }
 
     var addr = ws.concat(host); // angular for getting url + port
     var connection = new WebSocket(addr.concat("/chat"));
