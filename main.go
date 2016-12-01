@@ -28,6 +28,6 @@ func main() {
 	}
 	fmt.Printf("On port %s\n", port)
 	// threads
-	go openconnection(port, r1)
 	go openconnection("5050", r2)
+	go openconnection(port, r1)
 }
