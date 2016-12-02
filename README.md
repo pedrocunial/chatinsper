@@ -32,6 +32,4 @@ go build
 - Navegue para web/views/chat.html e utilize o serviço
 
 O serviço pode ser acessado também pelo site:
-https://shrouded-springs-35758.herokuapp.com/view/chat.html
-
-
+https://chatinsper.herokuapp.com
