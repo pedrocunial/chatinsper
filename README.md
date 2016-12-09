@@ -18,18 +18,18 @@ export PORT=8888
 - Instale o Godep, ele cuidará das dependencias do projeto por você. Você pode instalar o Godep utilizando o comando:
 
 ```
-go get gihub.com/tools/godep
+go get github.com/tools/godep
 ```
 
 - Monte o projeto!
 
 ```
-go build
+go install
 ```
 
 - Um arquivo executavel deve ter aparecido no diretório, execute ele e acesse localhost:<PORT>, onde PORT será o valor padrão da sua variável de sistema $PORT
 
-- Navegue para web/views/chat.html e utilize o serviço
+- Acesse o site!
 
 O serviço pode ser acessado também pelo site:
 https://chatinsper.herokuapp.com
